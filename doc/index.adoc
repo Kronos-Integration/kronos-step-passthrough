@@ -1,0 +1,51 @@
+== Step pass through
+This step just passes the messages through without doing any thing with it.
+This is very useful for testing proposes but not really for production.
+
+=== Endpoints
+This Adapter has two endpoints. One 'in' and one 'out' enpoint.
+
+==== outDummy
+This endpoint send out messages comming from the ''inDummy'' endpoint.
+
+.Endpoint description
+[options="header", cols="2"]
+|====
+|Description|Value
+|*Name*|outDummy
+|*Direction*|out
+|*Active*|true
+|*Passive*|false
+|====
+
+.Message Format
+[source,js]
+----
+{
+  "header": {},
+  "payload": {}
+}
+----
+
+==== inDummy
+Receiving messages
+
+.Endpoint description
+[options="header", cols="2"]
+|====
+|Description|Value
+|*Name*|inDummy
+|*Direction*|in
+|*Active*|false
+|*Passive*|true
+|====
+
+.Message formats
+[source,js]
+----
+{
+  "header": {},
+  "payload": {}
+}
+----
+Accepts any message and will push it without any modification directly to the out endpoint.
