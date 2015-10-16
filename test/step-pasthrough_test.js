@@ -7,30 +7,28 @@ const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
 
-const stepPassThroughFactory = require('../lib/step-passthrough');
-const Endpoint = require('kronos-step').endpoint;
+const events = require('events');
+const StepPassThrough = require('../lib/step-passthrough');
+const Endpoint = require('kronos-step');
 const messageFactory = require('kronos-step').message;
+
+const manager = Object.create(new events.EventEmitter(), {});
+
 
 describe('step-passthrough', function () {
 
 	it('Just create the step', function (done) {
-		let step1 = stepPassThroughFactory({}, {}, {
-			"name": "myStep"
-		});
-
-		//
+		let step1 = new StepPassThrough(manager, undefined, "myStep", StepPassThrough.configuration);
 		done();
 	});
 
 	it('Check that the enpoints exists', function (done) {
-		let step1 = stepPassThroughFactory({}, {}, {
-			"name": "myStep"
-		});
+		let step1 = new StepPassThrough(manager, undefined, "myStep", StepPassThrough.configuration);
 
-		let inEndPoint = step1.getEndpoint('inDummy');
+		let inEndPoint = step1.endpoints.in;
 		assert.ok(inEndPoint, 'The in endpoint is missing');
 
-		let outEndPoint = step1.getEndpoint('outDummy');
+		let outEndPoint = step1.endpoints.out;
 		assert.ok(outEndPoint, 'The out endpoint is missing');
 
 		done();
@@ -38,9 +36,7 @@ describe('step-passthrough', function () {
 
 
 	it('Send a messsage throug the step', function (done) {
-		let step1 = stepPassThroughFactory({}, {}, {
-			"name": "myStep"
-		});
+		let step1 = new StepPassThrough(manager, undefined, "myStep", StepPassThrough.configuration);
 
 		const msgToSend = messageFactory({
 			"file_name": "anyFile.txt"
@@ -51,8 +47,22 @@ describe('step-passthrough', function () {
 		};
 
 
-		let inEndPoint = step1.getEndpoint('inDummy');
-		let outEndPoint = step1.getEndpoint('outDummy');
+		let inEndPoint = step1.endpoints.in;
+		let outEndPoint = step1.endpoints.out;
+
+		// This endpoint is the IN endpoint of the next step.
+		// It will be connected with the OUT endpoint of the Adpater
+		let receiveEndpoint = Endpoint.createEndpoint("testEndpointIn", {
+			"in": true,
+			"passive": true
+		});
+
+		// This endpoint is the OUT endpoint of the previous step.
+		// It will be connected with the OUT endpoint of the Adpater
+		let sendEndpoint = Endpoint.createEndpoint("testEndpointOut", {
+			"out": true,
+			"active": true
+		});
 
 
 		// This generator emulates the IN endpoint of the next step.
@@ -70,19 +80,13 @@ describe('step-passthrough', function () {
 				done();
 			}
 		};
+		receiveEndpoint.setPassiveGenerator(generatorFunction);
+		outEndPoint.connect(receiveEndpoint);
+		inEndPoint.connect(sendEndpoint);
 
-		outEndPoint.connectedEndpoint = generatorFunction;
-		outEndPoint.outActiveIterator = generatorFunction();
-		outEndPoint
-			.outActiveIterator
-			.next();
+		step1.start();
 
-
-		let it = inEndPoint.getInPassiveIterator()();
-		it.next();
-
-		it.next(msgToSend);
-
+		sendEndpoint.send(msgToSend);
 
 
 	});
