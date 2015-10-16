@@ -87,8 +87,6 @@ describe('step-passthrough', function () {
 		step1.start();
 
 		sendEndpoint.send(msgToSend);
-
-
 	});
 
 

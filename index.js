@@ -1,10 +1,10 @@
 /* jslint node: true, esnext: true */
 "use strict";
 
-const step = require('./lib/step-passthrough');
+const Step = require('./lib/step-passthrough');
 
-module.exports.Step = step.Step;
+module.exports.Step = Step;
 
 exports.registerWithManager = function (manager) {
-	manager.registerStep(step);
+	manager.registerStep(Step);
 };
