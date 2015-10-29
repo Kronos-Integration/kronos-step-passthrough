@@ -120,14 +120,10 @@ describe('step-passthrough', function () {
 		inEndPoint.connect(sendEndpoint);
 
 		stepBase.start().then(function (step) {
-			console.log(`State = '${stepBase.state}'`);
-			console.log(`Running = '${stepBase.isRunning}'`);
 			sendEndpoint.send(msgToSend);
 		}, function (error) {
-			console.error('uh oh: ', error); // 'uh oh: something bad happened’
+			done(error); // 'uh oh: something bad happened’
 		});
-
-
 	});
 
 
