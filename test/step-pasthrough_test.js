@@ -8,35 +8,70 @@ const expect = chai.expect;
 const should = chai.should();
 
 const events = require('events');
-const StepPassThrough = require('../lib/step-passthrough');
-const Endpoint = require('kronos-step');
-const messageFactory = require('kronos-step').message;
 
-const manager = Object.create(new events.EventEmitter(), {});
+const step = require('kronos-step');
+const scopeDefinitions = step.ScopeDefinitions;
+const scopeReporter = require('scope-reporter');
+const stepPassThrough = require('../index.js');
+const messageFactory = require('kronos-message');
 
+// Create a mock manager
+const sr = scopeReporter.createReporter(scopeDefinitions);
+var stepImplementations = {};
+const manager = Object.create(new events.EventEmitter(), {
+	steps: {
+		value: stepImplementations
+	},
+	scopeReporter: {
+		value: sr
+	}
+});
+manager.registerStepImplementation = function (si) {
+	stepImplementations[si.name] = si;
+};
+
+manager.getStepInstance = function (configuration) {
+	const stepImpl = stepImplementations[configuration.type];
+	if (stepImpl) {
+		return stepImpl.getInstance(this, this.scopeReporter, configuration);
+	}
+};
+
+stepPassThrough.registerWithManager(manager);
+
+const stepBase = manager.getStepInstance({
+	"type": "kronos-step-passthrough",
+	"name": "myPassThrough"
+});
 
 describe('step-passthrough', function () {
 
-	it('Just create the step', function (done) {
-		let step1 = new StepPassThrough(manager, undefined, "myStep", StepPassThrough.configuration);
-		done();
-	});
+	it('Check that the step was created with its own name', function (done) {
 
-	it('Check that the enpoints exists', function (done) {
-		let step1 = new StepPassThrough(manager, undefined, "myStep", StepPassThrough.configuration);
-
-		let inEndPoint = step1.endpoints.in;
-		assert.ok(inEndPoint, 'The in endpoint is missing');
-
-		let outEndPoint = step1.endpoints.out;
-		assert.ok(outEndPoint, 'The out endpoint is missing');
-
+		assert.ok(stepBase);
+		assert.deepEqual(stepBase.toJSONWithOptions({
+			includeRuntimeInfo: false,
+			includeDefaults: false,
+			includeName: true
+		}), {
+			"type": "kronos-step-passthrough",
+			"name": "myPassThrough",
+			"endpoints": {
+				"in": {
+					"in": true,
+					"passive": true
+				},
+				"out": {
+					"out": true,
+					"active": true
+				}
+			}
+		});
 		done();
 	});
 
 
 	it('Send a messsage throug the step', function (done) {
-		let step1 = new StepPassThrough(manager, undefined, "myStep", StepPassThrough.configuration);
 
 		const msgToSend = messageFactory({
 			"file_name": "anyFile.txt"
@@ -47,19 +82,19 @@ describe('step-passthrough', function () {
 		};
 
 
-		let inEndPoint = step1.endpoints.in;
-		let outEndPoint = step1.endpoints.out;
+		let inEndPoint = stepBase.endpoints.in;
+		let outEndPoint = stepBase.endpoints.out;
 
 		// This endpoint is the IN endpoint of the next step.
 		// It will be connected with the OUT endpoint of the Adpater
-		let receiveEndpoint = Endpoint.createEndpoint("testEndpointIn", {
+		let receiveEndpoint = step.createEndpoint("testEndpointIn", {
 			"in": true,
 			"passive": true
 		});
 
 		// This endpoint is the OUT endpoint of the previous step.
 		// It will be connected with the OUT endpoint of the Adpater
-		let sendEndpoint = Endpoint.createEndpoint("testEndpointOut", {
+		let sendEndpoint = step.createEndpoint("testEndpointOut", {
 			"out": true,
 			"active": true
 		});
@@ -84,9 +119,15 @@ describe('step-passthrough', function () {
 		outEndPoint.connect(receiveEndpoint);
 		inEndPoint.connect(sendEndpoint);
 
-		step1.start();
+		stepBase.start().then(function (step) {
+			console.log(`State = '${stepBase.state}'`);
+			console.log(`Running = '${stepBase.isRunning}'`);
+			sendEndpoint.send(msgToSend);
+		}, function (error) {
+			console.error('uh oh: ', error); // 'uh oh: something bad happened’
+		});
 
-		sendEndpoint.send(msgToSend);
+
 	});
 
 
