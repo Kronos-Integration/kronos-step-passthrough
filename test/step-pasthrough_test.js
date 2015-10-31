@@ -15,7 +15,9 @@ const scopeReporter = require('scope-reporter');
 const stepPassThrough = require('../index.js');
 const messageFactory = require('kronos-message');
 
+// ---------------------------
 // Create a mock manager
+// ---------------------------
 const sr = scopeReporter.createReporter(scopeDefinitions);
 var stepImplementations = {};
 const manager = Object.create(new events.EventEmitter(), {
