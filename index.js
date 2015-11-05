@@ -1,11 +1,12 @@
 /* jslint node: true, esnext: true */
 "use strict";
 
-const StepPassThrough = require('./lib/step-passthrough');
+const StepPassThroughFactory = require('./lib/step-passthrough');
 const Step = require('kronos-step');
+const BaseStep = Step.BaseStep;
 
-module.exports.StepPassThrough = StepPassThrough;
+module.exports.StepPassThrough = StepPassThroughFactory;
 
 exports.registerWithManager = function (manager) {
-	manager.registerStepImplementation(Step.prepareStepForRegistration(manager, undefined, StepPassThrough));
+	manager.registerStepImplementation(StepPassThroughFactory);
 };
