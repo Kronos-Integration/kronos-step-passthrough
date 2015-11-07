@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "kronos-message": "^1.0.1",
-    "chai": "3.4.0",
+    "chai": "3.4.1",
     "istanbul": "^0.4.0",
     "mocha": "2.3.3",
     "scope-reporter": "2.1.0",
