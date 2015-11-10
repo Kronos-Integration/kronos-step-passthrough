@@ -57,6 +57,7 @@ describe('step-passthrough', function () {
 			includeName: true
 		}), {
 			"type": "kronos-step-passthrough",
+			"description": "This step just passes all requests from its 'in' endpoint to its 'out' endpoint.",
 			"name": "myPassThrough",
 			"endpoints": {
 				"in": {
