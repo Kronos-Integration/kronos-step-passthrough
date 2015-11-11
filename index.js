@@ -2,8 +2,6 @@
 "use strict";
 
 const StepPassThroughFactory = require('./lib/step-passthrough');
-const Step = require('kronos-step');
-const BaseStep = Step.BaseStep;
 
 module.exports.StepPassThrough = StepPassThroughFactory;
 
