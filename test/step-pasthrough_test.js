@@ -10,34 +10,14 @@ const should = chai.should();
 const events = require('events');
 
 const step = require('kronos-step');
-const scopeDefinitions = step.ScopeDefinitions;
-const scopeReporter = require('scope-reporter');
+const testStep = require('kronos-test-step');
 const stepPassThrough = require('../index.js');
 const messageFactory = require('kronos-message');
 
 // ---------------------------
 // Create a mock manager
 // ---------------------------
-const sr = scopeReporter.createReporter(scopeDefinitions);
-var stepImplementations = {};
-const manager = Object.create(new events.EventEmitter(), {
-	steps: {
-		value: stepImplementations
-	},
-	scopeReporter: {
-		value: sr
-	}
-});
-manager.registerStepImplementation = function (si) {
-	stepImplementations[si.name] = si;
-};
-
-manager.getStepInstance = function (configuration) {
-	const stepImpl = stepImplementations[configuration.type];
-	if (stepImpl) {
-		return stepImpl.createInstance(this, this.scopeReporter, configuration);
-	}
-};
+const manager = testStep.managerMock;
 
 stepPassThrough.registerWithManager(manager);
 
