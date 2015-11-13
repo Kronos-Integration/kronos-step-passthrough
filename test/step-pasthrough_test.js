@@ -7,8 +7,6 @@ const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
 
-const events = require('events');
-
 const step = require('kronos-step');
 const testStep = require('kronos-test-step');
 const stepPassThrough = require('../index.js');
