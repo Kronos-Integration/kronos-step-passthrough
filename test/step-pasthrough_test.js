@@ -87,7 +87,6 @@ describe('step-passthrough', function () {
 			while (true) {
 				const message = yield;
 
-
 				// the received message should equal the sended one
 				// before comparing delete the hops
 				message.hops = [];
