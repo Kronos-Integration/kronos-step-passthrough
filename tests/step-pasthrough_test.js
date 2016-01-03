@@ -39,12 +39,10 @@ describe('step-passthrough', function () {
 			"name": "myPassThrough",
 			"endpoints": {
 				"in": {
-					"in": true,
-					"passive": true
+					"in": true
 				},
 				"out": {
-					"out": true,
-					"active": true
+					"out": true
 				}
 			}
 		});
@@ -69,33 +67,25 @@ describe('step-passthrough', function () {
 		// This endpoint is the IN endpoint of the next step.
 		// It will be connected with the OUT endpoint of the Adpater
 		let receiveEndpoint = step.createEndpoint("testEndpointIn", {
-			"in": true,
-			"passive": true
+			"in": true
 		});
 
 		// This endpoint is the OUT endpoint of the previous step.
 		// It will be connected with the OUT endpoint of the Adpater
 		let sendEndpoint = step.createEndpoint("testEndpointOut", {
-			"out": true,
-			"active": true
+			"out": true
 		});
 
+		receiveEndpoint.receive = function (message) {
+			// the received message should equal the sended one
+			// before comparing delete the hops
+			message.hops = [];
 
-		// This generator emulates the IN endpoint of the next step.
-		// It will be connected with the OUT endpoint of the Adpater
-		let generatorFunction = function* () {
-			while (true) {
-				const message = yield;
-
-				// the received message should equal the sended one
-				// before comparing delete the hops
-				message.hops = [];
-
-				assert.deepEqual(message, msgToSend);
-				done();
-			}
+			assert.deepEqual(message, msgToSend);
+			done();
 		};
-		receiveEndpoint.setPassiveGenerator(generatorFunction);
+
+
 		outEndPoint.connect(receiveEndpoint);
 		inEndPoint.connect(sendEndpoint);
 
