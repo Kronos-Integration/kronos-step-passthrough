@@ -10,7 +10,7 @@ const should = chai.should();
 const step = require('kronos-step');
 const testStep = require('kronos-test-step');
 const stepPassThrough = require('../index.js');
-const messageFactory = require('kronos-message');
+const createMessage = require('kronos-message').createMessage;
 
 // ---------------------------
 // Create a mock manager
@@ -52,7 +52,7 @@ describe('step-passthrough', function () {
 
 	it('Send a messsage throug the step', function (done) {
 
-		const msgToSend = messageFactory({
+		const msgToSend = createMessage({
 			"file_name": "anyFile.txt"
 		});
 
