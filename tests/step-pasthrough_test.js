@@ -24,9 +24,9 @@ const stepBase = manager.getStepInstance({
 	"name": "myPassThrough"
 });
 
-describe('step-passthrough', function () {
+describe('step-passthrough', () => {
 
-	it('Check that the step was created with its own name', function (done) {
+	it('Check that the step was created with its own name', done => {
 
 		assert.ok(stepBase);
 		assert.deepEqual(stepBase.toJSONWithOptions({
@@ -50,7 +50,7 @@ describe('step-passthrough', function () {
 	});
 
 
-	it('Send a messsage throug the step', function (done) {
+	it('Send a messsage throug the step', done => {
 
 		const msgToSend = createMessage({
 			"file_name": "anyFile.txt"
@@ -60,23 +60,18 @@ describe('step-passthrough', function () {
 			"name": "pay load"
 		};
 
-
 		let inEndPoint = stepBase.endpoints.in;
 		let outEndPoint = stepBase.endpoints.out;
 
 		// This endpoint is the IN endpoint of the next step.
 		// It will be connected with the OUT endpoint of the Adpater
-		let receiveEndpoint = step.createEndpoint("testEndpointIn", {
-			"in": true
-		});
+		const receiveEndpoint = new step.endpoint.ReceiveEndpoint("testEndpointIn");
 
 		// This endpoint is the OUT endpoint of the previous step.
 		// It will be connected with the OUT endpoint of the Adpater
-		let sendEndpoint = step.createEndpoint("testEndpointOut", {
-			"out": true
-		});
+		const sendEndpoint = new step.endpoint.SendEndpoint("testEndpointOut");
 
-		receiveEndpoint.receive = function (message) {
+		receiveEndpoint.receive = message => {
 			// the received message should equal the sended one
 			// before comparing delete the hops
 			message.hops = [];
@@ -85,17 +80,12 @@ describe('step-passthrough', function () {
 			done();
 		};
 
+		outEndPoint.connected = receiveEndpoint;
+		sendEndpoint.connected = inEndPoint;
 
-		outEndPoint.connect(receiveEndpoint);
-		inEndPoint.connect(sendEndpoint);
-
-		stepBase.start().then(function (step) {
-			sendEndpoint.send(msgToSend);
-		}, function (error) {
-			done(error); // 'uh oh: something bad happened’
-		});
+		stepBase.start().then(step => sendEndpoint.receive(msgToSend),
+			done // 'uh oh: something bad happened’
+		).catch(done);
 	});
-
-
 
 });
