@@ -21,7 +21,7 @@
     "kronos-step": "3.9.0"
   },
   "devDependencies": {
-    "chai": "3.4.1",
+    "chai": "3.5.0",
     "install": "0.4.1",
     "istanbul": "^0.4.2",
     "kronos-message": "^2.0.1",
