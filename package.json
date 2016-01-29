@@ -26,7 +26,7 @@
     "istanbul": "^0.4.2",
     "kronos-message": "^2.0.1",
     "kronos-test-step": "2.10.0",
-    "mocha": "2.4.4",
+    "mocha": "2.4.5",
     "npm": "3.5.3",
     "scope-reporter": "2.3.0",
     "semantic-release": "6.1.0"
