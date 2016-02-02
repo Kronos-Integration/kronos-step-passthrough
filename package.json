@@ -18,17 +18,17 @@
   },
   "homepage": "https://github.com/Kronos-Integration/kronos-step-passthrough#readme",
   "dependencies": {
-    "kronos-step": "3.9.0"
+    "kronos-step": "4.0.1"
   },
   "devDependencies": {
     "chai": "3.5.0",
     "install": "0.4.1",
     "istanbul": "^0.4.2",
     "kronos-message": "^2.0.1",
-    "kronos-test-step": "2.10.0",
+    "kronos-service-manager": "^3.0.0",
+    "kronos-test-step": "3.0.0",
     "mocha": "2.4.5",
     "npm": "3.5.3",
-    "scope-reporter": "2.3.0",
     "semantic-release": "6.1.0"
   },
   "contributors": [

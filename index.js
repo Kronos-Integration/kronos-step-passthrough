@@ -5,6 +5,4 @@ const StepPassThroughFactory = require('./lib/step-passthrough');
 
 module.exports.StepPassThrough = StepPassThroughFactory;
 
-exports.registerWithManager = function (manager) {
-	manager.registerStepImplementation(StepPassThroughFactory);
-};
+exports.registerWithManager = manager => manager.registerStep(StepPassThroughFactory);
