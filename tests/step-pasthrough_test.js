@@ -7,7 +7,7 @@ const assert = chai.assert;
 const expect = chai.expect;
 const should = chai.should();
 
-const step = require('kronos-step');
+const endpoint = require('kronos-endpoint');
 const testStep = require('kronos-test-step');
 const stepPassThrough = require('../index.js');
 const createMessage = require('kronos-message').createMessage;
@@ -17,14 +17,7 @@ const serviceManager = require('kronos-service-manager');
 // ---------------------------
 // Create a mock manager
 // ---------------------------
-const managerPromise = serviceManager.manager().then(manager =>
-	Promise.all([
-		stepPassThrough.registerWithManager(manager),
-	]).then(() =>
-		Promise.resolve(manager)
-	));
-
-
+const managerPromise = serviceManager.manager({}, [stepPassThrough]);
 
 describe('step-passthrough', () => {
 
@@ -80,11 +73,11 @@ describe('step-passthrough', () => {
 
 			// This endpoint is the IN endpoint of the next step.
 			// It will be connected with the OUT endpoint of the Adpater
-			const receiveEndpoint = new step.endpoint.ReceiveEndpoint("testEndpointIn");
+			const receiveEndpoint = new endpoint.ReceiveEndpoint("testEndpointIn");
 
 			// This endpoint is the OUT endpoint of the previous step.
 			// It will be connected with the OUT endpoint of the Adpater
-			const sendEndpoint = new step.endpoint.SendEndpoint("testEndpointOut");
+			const sendEndpoint = new endpoint.SendEndpoint("testEndpointOut");
 
 			receiveEndpoint.receive = message => {
 				// the received message should equal the sended one
