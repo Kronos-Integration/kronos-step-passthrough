@@ -24,7 +24,7 @@
     "chai": "3.5.0",
     "istanbul": "0.4.2",
     "kronos-message": "^2.0.1",
-    "kronos-service-manager": "^3.2.5",
+    "kronos-service-manager": "^3.2.8",
     "kronos-test-step": "3.0.0",
     "mocha": "2.4.5",
     "semantic-release": "6.2.0",
