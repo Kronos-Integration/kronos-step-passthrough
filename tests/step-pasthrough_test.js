@@ -1,6 +1,6 @@
 /* global describe, it, xit, before, beforeEach, after, afterEach */
 /* jslint node: true, esnext: true */
-"use strict";
+'use strict';
 
 const chai = require('chai'),
 	assert = chai.assert,
@@ -22,8 +22,8 @@ describe('step-passthrough', () => {
 	it('Check that the step was created with its own name', () => {
 		return managerPromise.then(manager => {
 			const stepBase = manager.createStepInstanceFromConfig({
-				"type": "kronos-step-passthrough",
-				"name": "myPassThrough"
+				type: 'kronos-step-passthrough',
+				name: 'myPassThrough'
 			}, manager);
 
 			assert.ok(stepBase);
@@ -32,15 +32,13 @@ describe('step-passthrough', () => {
 				includeDefaults: false,
 				includeName: true
 			}), {
-				"type": "kronos-step-passthrough",
-				"description": "This step just passes all requests from its 'in' endpoint to its 'out' endpoint.",
-				"name": "myPassThrough",
-				"endpoints": {
-					"in": {
-						"in": true
+				type: 'kronos-step-passthrough',
+				description: "This step just passes all requests from its 'in' endpoint to its 'out' endpoint.",
+				name: 'myPassThrough',
+				endpoints: { in : { in : true
 					},
-					"out": {
-						"out": true
+					out: {
+						out: true
 					}
 				}
 			});
@@ -52,16 +50,16 @@ describe('step-passthrough', () => {
 	it('Send a messsage throug the step', () => {
 		return managerPromise.then(manager => {
 			const stepBase = manager.createStepInstanceFromConfig({
-				"type": "kronos-step-passthrough",
-				"name": "myPassThrough"
+				type: 'kronos-step-passthrough',
+				name: 'myPassThrough'
 			}, manager);
 
 			const msgToSend = createMessage({
-				"file_name": "anyFile.txt"
+				file_name: 'anyFile.txt'
 			});
 
 			msgToSend.payload = {
-				"name": "pay load"
+				name: 'pay load'
 			};
 
 			let inEndPoint = stepBase.endpoints.in;
@@ -69,11 +67,11 @@ describe('step-passthrough', () => {
 
 			// This endpoint is the IN endpoint of the next step.
 			// It will be connected with the OUT endpoint of the Adpater
-			const receiveEndpoint = new endpoint.ReceiveEndpoint("testEndpointIn");
+			const receiveEndpoint = new endpoint.ReceiveEndpoint('testEndpointIn');
 
 			// This endpoint is the OUT endpoint of the previous step.
 			// It will be connected with the OUT endpoint of the Adpater
-			const sendEndpoint = new endpoint.SendEndpoint("testEndpointOut");
+			const sendEndpoint = new endpoint.SendEndpoint('testEndpointOut');
 
 			receiveEndpoint.receive = message => {
 				// the received message should equal the sended one
