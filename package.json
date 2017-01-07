@@ -27,7 +27,7 @@
     "istanbul": "0.4.5",
     "jsdoc": "3.4.3",
     "kronos-message": "^2.1.0",
-    "kronos-service-manager": "^3.4.20",
+    "kronos-service-manager": "^3.5.6",
     "kronos-test-step": "^3.1.4",
     "mocha": "3.2.0",
     "semantic-release": "^6.3.5"
