@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Kronos-Integration/kronos-step-passthrough.git"
+    "url": "git+https://github.com/Kronos-Integration/kronos-step-passthrough.git"
   },
   "bugs": {
     "url": "https://github.com/Kronos-Integration/kronos-step-passthrough/issues"
@@ -22,15 +22,15 @@
     "kronos-step": "^5.3.7"
   },
   "devDependencies": {
-    "chai": "3.5.0",
+    "chai": "^4.1.2",
     "cz-conventional-changelog": "1.2.0",
     "istanbul": "0.4.5",
     "jsdoc": "3.4.3",
     "kronos-message": "^2.1.0",
     "kronos-service-manager": "^3.4.20",
     "kronos-test-step": "^3.1.4",
-    "mocha": "3.2.0",
-    "semantic-release": "^6.3.5"
+    "mocha": "^3.5.3",
+    "semantic-release": "^8.0.0"
   },
   "contributors": [
     {
@@ -44,12 +44,17 @@
   ],
   "license": "BSD-2-Clause",
   "engines": {
-    "node": ">=6.9.1"
+    "node": ">=8.5.0"
   },
-  "keywords": ["kronos-step"],
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
+  "keywords": [
+    "kronos-step"
+  ],
+  "xo": {
+    "space": true
+  },
+  "template": {
+    "repository": {
+      "url": "https://github.com/Kronos-Tools/npm-package-template-minimal.git"
     }
   }
 }
