@@ -4,33 +4,33 @@
   "description": "copy trough step implementation",
   "main": "index.js",
   "scripts": {
-    "cover": "./node_modules/istanbul/lib/cli.js cover --hook-run-in-context ./node_modules/mocha/bin/_mocha -- --R spec --U exports tests/*_test.js",
+    "cover": "./node_modules/istanbul/lib/cli.js cover --hook-run-in-context ./node_modules/mocha/bin/_mocha -- --R spec --U exports tests/*-test.js",
     "doc": "./node_modules/.bin/jsdoc lib/*.js",
-    "test": "./node_modules/.bin/mocha tests/*_test.js",
+    "test": "./node_modules/.bin/mocha tests/*-test.js",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Kronos-Integration/kronos-step-passthrough.git"
+    "url": "https://github.com/Kronos-Integration/kronos-step-passthrough.git"
   },
   "bugs": {
     "url": "https://github.com/Kronos-Integration/kronos-step-passthrough/issues"
   },
   "homepage": "https://github.com/Kronos-Integration/kronos-step-passthrough#readme",
   "dependencies": {
-    "kronos-endpoint": "^2.14.11",
+    "kronos-endpoint": "^2.14.5",
     "kronos-step": "^5.3.7"
   },
   "devDependencies": {
-    "chai": "^4.1.2",
-    "cz-conventional-changelog": "2.0.0",
+    "chai": "3.5.0",
+    "cz-conventional-changelog": "1.2.0",
     "istanbul": "0.4.5",
-    "jsdoc": "3.5.5",
+    "jsdoc": "3.4.3",
     "kronos-message": "^2.1.0",
-    "kronos-service-manager": "^3.5.10",
+    "kronos-service-manager": "^3.4.20",
     "kronos-test-step": "^3.1.4",
-    "mocha": "^3.5.3",
-    "semantic-release": "^8.0.0"
+    "mocha": "3.2.0",
+    "semantic-release": "^6.3.5"
   },
   "contributors": [
     {
@@ -44,17 +44,12 @@
   ],
   "license": "BSD-2-Clause",
   "engines": {
-    "node": ">=8.5.0"
+    "node": ">=6.9.1"
   },
-  "keywords": [
-    "kronos-step"
-  ],
-  "xo": {
-    "space": true
-  },
-  "template": {
-    "repository": {
-      "url": "https://github.com/Kronos-Tools/npm-package-template-minimal.git"
+  "keywords": ["kronos-step"],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
   }
 }
