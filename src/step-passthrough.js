@@ -1,11 +1,11 @@
 import { Step } from 'kronos-step';
 
 export class PassthroughStep extends Step {
-  get name() {
+  static get name() {
     return 'kronos-step-passthrough';
   }
 
-  get description() {
+  static get description() {
     return "This step just passes all requests from its 'in' endpoint to its 'out' endpoint.";
   }
 

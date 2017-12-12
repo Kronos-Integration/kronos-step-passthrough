@@ -18,16 +18,16 @@ test('step-passthrough', t => {
     }),
     {
       type: 'kronos-step-passthrough',
-      description:
-        "This step just passes all requests from its 'in' endpoint to its 'out' endpoint.",
+      /*description:
+        "This step just passes all requests from its 'in' endpoint to its 'out' endpoint.",*/
       name: 'myPassThrough',
       endpoints: {
-        in: {
+        /*    in: {
           in: true
         },
         out: {
           out: true
-        }
+        }*/
       }
     }
   );
