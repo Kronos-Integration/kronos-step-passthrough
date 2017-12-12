@@ -2,7 +2,8 @@
   "name": "kronos-step-passthrough",
   "version": "0.0.0-semantic-release",
   "description": "copy trough step implementation",
-  "main": "index.js",
+  "main": "dist/step-passthrough.js",
+  "module": "src/step-passthrough.js",
   "scripts": {
     "cover": "nyc --temp-directory build/nyc ava",
     "doc": "./node_modules/.bin/jsdoc lib/*.js",
@@ -23,13 +24,9 @@
   },
   "homepage": "https://github.com/Kronos-Integration/kronos-step-passthrough#readme",
   "dependencies": {
-    "kronos-endpoint": "^2.14.14",
     "kronos-step": "^5.6.1"
   },
   "devDependencies": {
-    "kronos-message": "^2.1.0",
-    "kronos-service-manager": "^3.4.20",
-    "kronos-test-step": "^3.1.4",
     "semantic-release": "^11.0.2",
     "jsdoc-to-markdown": "^3.0.2",
     "jsdoc-babel": "^0.3.0",
