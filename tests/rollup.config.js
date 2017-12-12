@@ -7,6 +7,6 @@ export default {
     format: 'cjs',
     sourcemap: true
   },
-  external: ['ava', 'kronos-step'],
+  external: ['ava', 'kronos-step', 'kronos-endpoint'],
   plugins: [multiEntry()]
 };

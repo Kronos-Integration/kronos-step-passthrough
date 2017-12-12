@@ -9,15 +9,18 @@ export class PassthroughStep extends Step {
     return "This step just passes all requests from its 'in' endpoint to its 'out' endpoint.";
   }
 
-  get endpoints() {
-    return {
-      in: {
-        in: true
+  static get endpoints() {
+    return Object.assign(
+      {
+        in: {
+          in: true
+        },
+        out: {
+          out: true
+        }
       },
-      out: {
-        out: true
-      }
-    };
+      Step.endpoints
+    );
   }
 
   async _start() {
@@ -26,6 +29,6 @@ export class PassthroughStep extends Step {
   }
 }
 
-async function registerWithManager(manager) {
+export async function registerWithManager(manager) {
   return manager.registerStep(PassthroughStep);
 }

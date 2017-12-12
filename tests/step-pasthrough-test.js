@@ -1,8 +1,9 @@
 import test from 'ava';
 import { PassthroughStep } from '../src/step-passthrough';
+import { SendEndpoint, ReceiveEndpoint } from 'kronos-endpoint';
 
-test('step-passthrough', t => {
-  const owner = {};
+test('step-passthrough static', t => {
+  const owner = { emit() {} };
   const step = new PassthroughStep(
     {
       type: 'kronos-step-passthrough',
@@ -10,108 +11,51 @@ test('step-passthrough', t => {
     },
     owner
   );
+
   t.deepEqual(
     step.toJSONWithOptions({
       includeRuntimeInfo: false,
       includeDefaults: false,
+      includeConfig: false,
       includeName: true
     }),
     {
       type: 'kronos-step-passthrough',
-      /*description:
-        "This step just passes all requests from its 'in' endpoint to its 'out' endpoint.",*/
       name: 'myPassThrough',
       endpoints: {
-        /*    in: {
+        in: {
           in: true
         },
         out: {
           out: true
-        }*/
+        }
       }
     }
   );
 });
 
-/*
-  it('Check that the step was created with its own name', () => {
-      const stepBase = manager.createStepInstanceFromConfig(
-        {
-          type: 'kronos-step-passthrough',
-          name: 'myPassThrough'
-        },
-        manager
-      );
+test('step-passthrough dynamic', async t => {
+  const owner = { emit() {} };
+  const step = new PassthroughStep(
+    {
+      type: 'kronos-step-passthrough',
+      name: 'myPassThrough'
+    },
+    owner
+  );
 
-      assert.ok(stepBase);
-      assert.deepEqual(
-        stepBase.toJSONWithOptions({
-          includeRuntimeInfo: false,
-          includeDefaults: false,
-          includeName: true
-        }),
-        {
-          type: 'kronos-step-passthrough',
-          description:
-            "This step just passes all requests from its 'in' endpoint to its 'out' endpoint.",
-          name: 'myPassThrough',
-          endpoints: {
-            in: {
-              in: true
-            },
-            out: {
-              out: true
-            }
-          }
-        }
-      );
-      return Promise.resolve();
-    });
-  });
+  const sendEndpoint = new SendEndpoint('testEndpointOut');
+  sendEndpoint.connected = step.endpoints.in;
 
-  it('Send a messsage throug the step', () => {
-    return managerPromise.then(manager => {
-      const stepBase = manager.createStepInstanceFromConfig(
-        {
-          type: 'kronos-step-passthrough',
-          name: 'myPassThrough'
-        },
-        manager
-      );
+  const receiveEndpoint = new ReceiveEndpoint('testEndpointIn');
+  step.endpoints.out.connected = receiveEndpoint;
 
-      const msgToSend = createMessage({
-        file_name: 'anyFile.txt'
-      });
+  await step.start();
 
-      msgToSend.payload = {
-        name: 'pay load'
-      };
+  t.is(step.state, 'running');
 
-      let inEndPoint = stepBase.endpoints.in;
-      let outEndPoint = stepBase.endpoints.out;
+  receiveEndpoint.receive = async message => `${message} echo`;
 
-      // This endpoint is the IN endpoint of the next step.
-      // It will be connected with the OUT endpoint of the Adpater
-      const receiveEndpoint = new endpoint.ReceiveEndpoint('testEndpointIn');
-
-      // This endpoint is the OUT endpoint of the previous step.
-      // It will be connected with the OUT endpoint of the Adpater
-      const sendEndpoint = new endpoint.SendEndpoint('testEndpointOut');
-
-      receiveEndpoint.receive = message => {
-        // the received message should equal the sended one
-        // before comparing delete the hops
-        message.hops = [];
-
-        assert.deepEqual(message, msgToSend);
-        return Promise.resolve();
-      };
-
-      outEndPoint.connected = receiveEndpoint;
-      sendEndpoint.connected = inEndPoint;
-
-      return stepBase.start().then(step => sendEndpoint.receive(msgToSend));
-    });
-  });
+  const result = await sendEndpoint.receive('hello');
+  t.is(result, 'hello echo');
 });
-*/
