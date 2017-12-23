@@ -1,6 +1,12 @@
 import { Step } from 'kronos-step';
 
+/**
+ * step with to conected endpoins in and out
+ */
 export class PassthroughStep extends Step {
+  /**
+   * @return {string} 'kronos-step-passthrough'
+   */
   static get name() {
     return 'kronos-step-passthrough';
   }
