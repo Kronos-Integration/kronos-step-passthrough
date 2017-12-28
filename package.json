@@ -1,9 +1,23 @@
 {
   "name": "kronos-step-passthrough",
   "version": "0.0.0-semantic-release",
-  "description": "copy trough step implementation",
   "main": "dist/step-passthrough.js",
   "module": "src/step-passthrough.js",
+  "description": "copy trough step implementation",
+  "keywords": [
+    "kronos-step"
+  ],
+  "contributors": [
+    {
+      "name": "Torsten Link",
+      "email": "torstenlink@gmx.de"
+    },
+    {
+      "name": "Markus Felten",
+      "email": "markus.felten@gmx.de"
+    }
+  ],
+  "license": "BSD-2-Clause",
   "scripts": {
     "cover": "nyc --temp-directory build/nyc ava",
     "doc": "./node_modules/.bin/jsdoc lib/*.js",
@@ -16,14 +30,6 @@
     "docs": "documentation readme src/step-passthrough.js --section=API",
     "lint": "documentation lint src/step-passthrough.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Kronos-Integration/kronos-step-passthrough.git"
-  },
-  "bugs": {
-    "url": "https://github.com/Kronos-Integration/kronos-step-passthrough/issues"
-  },
-  "homepage": "https://github.com/Kronos-Integration/kronos-step-passthrough#readme",
   "dependencies": {
     "kronos-step": "^5.6.1"
   },
@@ -37,31 +43,17 @@
     "xo": "^0.19.0",
     "documentation": "^5.3.5"
   },
-  "contributors": [
-    {
-      "name": "Torsten Link",
-      "email": "torstenlink@gmx.de"
-    },
-    {
-      "name": "Markus Felten",
-      "email": "markus.felten@gmx.de"
-    }
-  ],
-  "license": "BSD-2-Clause",
   "engines": {
     "node": ">=8.9.3"
   },
-  "keywords": [
-    "kronos-step"
-  ],
-  "xo": {
-    "space": true
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kronos-Integration/kronos-step-passthrough.git"
   },
-  "template": {
-    "repository": {
-      "url": "https://github.com/arlac77/npm-package-template.git"
-    }
+  "bugs": {
+    "url": "https://github.com/Kronos-Integration/kronos-step-passthrough/issues"
   },
+  "homepage": "https://github.com/Kronos-Integration/kronos-step-passthrough#readme",
   "ava": {
     "files": [
       "build/*-test.js"
@@ -81,5 +73,13 @@
       "lcov"
     ],
     "report-dir": "./build/coverage"
+  },
+  "xo": {
+    "space": true
+  },
+  "template": {
+    "repository": {
+      "url": "https://github.com/arlac77/npm-package-template.git"
+    }
   }
 }
