@@ -7,7 +7,6 @@
 [![Coverage Status](https://coveralls.io/repos/Kronos-Integration/kronos-step-passthrough/badge.svg)](https://coveralls.io/r/Kronos-Integration/kronos-step-passthrough)
 [![Known Vulnerabilities](https://snyk.io/test/github/Kronos-Integration/kronos-step-passthrough/badge.svg)](https://snyk.io/test/github/Kronos-Integration/kronos-step-passthrough)
 [![GitHub Issues](https://img.shields.io/github/issues/Kronos-Integration/kronos-step-passthrough.svg?style=flat-square)](https://github.com/Kronos-Integration/kronos-step-passthrough/issues)
-[![Stories in Ready](https://badge.waffle.io/Kronos-Integration/kronos-step-passthrough.svg?label=ready&title=Ready)](http://waffle.io/Kronos-Integration/kronos-step-passthrough)
 [![Dependency Status](https://david-dm.org/Kronos-Integration/kronos-step-passthrough.svg)](https://david-dm.org/Kronos-Integration/kronos-step-passthrough)
 [![devDependency Status](https://david-dm.org/Kronos-Integration/kronos-step-passthrough/dev-status.svg)](https://david-dm.org/Kronos-Integration/kronos-step-passthrough#info=devDependencies)
 [![docs](http://inch-ci.org/github/Kronos-Integration/kronos-step-passthrough.svg?branch=master)](http://inch-ci.org/github/Kronos-Integration/kronos-step-passthrough)
